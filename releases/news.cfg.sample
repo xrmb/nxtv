@@ -1,0 +1,13 @@
+;	warning, config files are very sensitive!
+;	comments are: ";<tab>comment"
+;	settings are: "key<tab>value" or "key<newline>value
+
+;	server settings note: SSL is not supported yet, use stunnel or no SSL
+
+host	newsserver.com
+port	119
+user	username
+pass	password
+
+connections	5
+timeout	45

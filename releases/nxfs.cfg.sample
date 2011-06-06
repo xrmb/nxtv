@@ -1,0 +1,7 @@
+cache	cache
+maxmem	160000000
+maxdisk	0
+
+nzbextfilter	par2|srr|sfv
+nzbnamefilter	sample
+nzbheadcheck	1

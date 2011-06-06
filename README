@@ -1,0 +1,82 @@
+
+
+What is nxtv:
+  nxtv is a collection of tools to access data from the newsgroups. The primary
+  objective is to access video data directly without downloading, repairing and
+  extracting.
+  
+
+Prerequisites:
+  Windows:
+  - Microsoft Visual C++ 2010 Redistributable Package
+    
+    http://www.microsoft.com/downloads/en/details.aspx?FamilyID=a7b7a05e-6de6-4d3a-a423-37bf0912db84
+    
+    Libaries to run the code. Only required if you get the error about
+    mscvr100.dll missing. You need the 32-bit version of it when you run
+    the 32-bit version of nxtv, even if you are on a 64-bit system. Currently
+    there is no 64-bit version of nxtv.
+    
+    
+  - Dokan Filesystem Driver (only for nxfs.exe)
+    
+    http://dokan-dev.net/en/download/
+    
+    Driver to mount nxtv virtual filesystem (nxtv.exe) on local computer.
+
+
+Configuration:
+  The releases folder has example config files. The news.cfg is required/shared
+  for all tools. Each tool has its own config, get what you plan to use.
+  See config files for settings, setting documentation will be added there.
+  
+  Create a "root" folder in the application directory (can be changed, but then
+  the tools need to be called with extra commandline arguments).
+  
+
+Input files:
+  nzb - index of a video (avi, mkv...), dvd (iso), bluray
+  nxi - nx index file (more later)
+  nxr - remote/web file system (more later)
+
+
+Filesystem Mode:
+  Copy some nzb files to the root folder. Start nxfs.exe, a M: drive should
+  apear. Each nzb will show up as a folder, enter it. For large nzbs the first
+  change dir might fail because it has to verify the headers, keep trying, it
+  will work and be cached for the future.
+  If the video is wrapped in rar's another folder level for each rar is there.
+  Inside the rar folder is the video, open it with your favorite player.
+  
+
+UPNP Server Mode:
+  Similar to filesystem mode...
+
+
+Known issues:
+  Cant change folder
+    - due to header checks there might be a delay, keep trying it will work
+    
+  error/message text files
+    - if there is something wrong in a nzb, rar a message text file will be
+      in the folder, it may contain helpful information
+      
+  missing header/incomplete nzbs
+    - if your nzb misses just a singe part in a key file it will fail
+    - if a message is not available on the server it probably cause problems,
+      a read error will be generated, good players might just drop a few frames
+      
+  password protected rars
+    - yeah, good luck with that
+    
+
+How does it work:
+  I'll explain later.
+  
+  
+Where is the source:
+  I want to clean it up before releasing it.
+  
+  
+nxfs.exe - file system driver
+nxup.exe - UPNP server
