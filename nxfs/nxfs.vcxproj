@@ -59,7 +59,7 @@
       <CallingConvention>StdCall</CallingConvention>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>dokan.lib;nxlib.lib;zdll.lib;libbz2.lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>dokan.lib;nxlib.lib;Ws2_32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
