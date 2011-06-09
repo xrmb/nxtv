@@ -118,7 +118,7 @@ int NXNNTP::connect()
   r = readline();
   if(r <= -1000) return R(-1011, "readline error");
   if(r < 0) return R(-11, "readline error");
-  if(r != 200)
+  if(r != 200 && r != 201)
   {
     disconnect(1);
     return R(-1012, "%02d not welcome? code: %d", m_cid, r);

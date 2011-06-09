@@ -2,7 +2,7 @@
 
 #include "nxlib.h"
 
-#define NXDYNZ
+//#define NXDYNZ
 
 #ifdef NXDYNZ
 #define BZ_NO_STDIO

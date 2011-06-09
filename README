@@ -42,16 +42,23 @@ Input files:
 
 Filesystem Mode:
   Copy some nzb files to the root folder. Start nxfs.exe, a M: drive should
-  apear. Each nzb will show up as a folder, enter it. For large nzbs the first
+  appear. Each nzb will show up as a folder, enter it. For large nzbs the first
   change dir might fail because it has to verify the headers, keep trying, it
   will work and be cached for the future.
   If the video is wrapped in rar's another folder level for each rar is there.
   Inside the rar folder is the video, open it with your favorite player.
   
+  Arguments:
+    /l <drive> (ex. /l m), defaults to m
+    /r <root> (ex. /l c:\nxfsroot), defaults to .\root
+  
 
 UPNP Server Mode:
   Similar to filesystem mode...
 
+  Arguments:
+    [-f <friendly_name>] [-p <port>] [-b] <path>
+  
 
 Known issues:
   Cant change folder
