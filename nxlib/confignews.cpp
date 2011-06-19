@@ -174,6 +174,27 @@ int NXLFSConfigNews::init0(const wchar_t* path)
   value = f->find("nzbnamefilter");
   if(value) { NXfree(m_nzbnamefilter); m_nzbnamefilter = NXstrdup(value); }
 
+  value = f->find("log");
+  if(value) 
+  {
+    memset(&NXLOG, 0, sizeof(NXLog));
+    while(*value)
+    {
+      switch(*value)
+      {
+      case 'c': NXLOG.cache++; break;
+      case 'd': NXLOG.dupe++; break;
+      case 'g': NXLOG.get++; break;
+      case 'h': NXLOG.head++; break;
+      case 'm': NXLOG.mutex++; break;
+      case 'p': NXLOG.perf++; break;
+      case 'r': NXLOG.reada++; break;
+      case 't': NXLOG.thread++; break;
+      }
+      value++;
+    }
+  }
+
   return 0;
 }
 
