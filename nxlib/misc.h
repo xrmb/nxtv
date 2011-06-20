@@ -15,6 +15,8 @@
 #define new NXNew
 #define NXstrdup(str) _strdup_dbg(str, _NORMAL_BLOCK, __FILE__, __LINE__)
 #define NXwcsdup(str) _wcsdup_dbg(str, _NORMAL_BLOCK, __FILE__, __LINE__)
+//#define NXalloca(size) alloca(size + 0*printf("%s:%d alloca %d bytes\n", __FILE__, __LINE__, size))
+#define NXalloca(size) alloca(size)
 #define NXmalloc(size) _malloc_dbg(size, _NORMAL_BLOCK, __FILE__, __LINE__)
 #define NXcalloc(num, size) _calloc_dbg(num, size, _NORMAL_BLOCK, __FILE__, __LINE__)
 #define NXrealloc(memblock, size) _realloc_dbg(memblock, size, _NORMAL_BLOCK, __FILE__, __LINE__)
@@ -26,6 +28,7 @@ extern char* NXwcsdupc_dbg(const wchar_t* str, const char* file, int line);
 #else
 #define NXstrdup(str) _strdup(str)
 #define NXwcsdup(str) _wcsdup(str)
+#define NXalloca(size) alloca(size)
 #define NXmalloc(size) malloc(size)
 #define NXcalloc(num, size) calloc(num, size)
 #define NXrealloc(memblock, size) realloc(memblock, size)
@@ -60,6 +63,7 @@ struct NXLog
   char mutex;
   char thread;
   char perf;
+  char reada;
 };
 
 extern NXLog NXLOG;

@@ -251,10 +251,20 @@ int NXNNTPPool::breq(bool gorh, int* ok, const char** msgids, int count, char* d
   NXLFSMessageCache* cache = NXLFSMessageCache::i();
   if(!cache) return R(-1, "no cache");
 
-  int* assign = (int*)_alloca(sizeof(int)*count);
+  bool usestack = true;
+  auto_free<int> afassign;
+  if(count*sizeof(int) > 256*1024)
+  {
+    usestack = false;
+  }
+
+  int* assign = usestack ? (int*)NXalloca(sizeof(int)*count)
+                         : afassign.get(count);
+  if(!assign) return R(-2, "out of memory");
   memset(assign, -1, sizeof(int)*count);
 
-  bool* tused = (bool*)_alloca(sizeof(bool)*m_count);
+  bool* tused = (bool*)NXalloca(sizeof(bool)*m_count);
+  // note: no ptr check due to stack alloca
   memset(tused, 0, sizeof(bool)*m_count);
 
   memset(ok, -1, sizeof(int)*count);
@@ -370,10 +380,20 @@ int NXNNTPPool::bmhead(int* ok, const char** msgids, int count, NXCbBatchRequest
 {
   if(count == 0) return 0;
 
-  int* assign = (int*)_alloca(sizeof(int)*count);
+  bool usestack = true;
+  auto_free<int> afassign;
+  if(count*sizeof(int) > 256*1024)
+  {
+    usestack = false;
+  }
+
+  int* assign = usestack ? (int*)NXalloca(sizeof(int)*count)
+                         : afassign.get(count);
+  if(!assign) return R(-2, "out of memory");
   memset(assign, -1, sizeof(int)*count);
 
-  bool* tused = (bool*)_alloca(sizeof(bool)*m_count);
+  bool* tused = (bool*)NXalloca(sizeof(bool)*m_count);
+  // note: no ptr check due to stack alloc
   memset(tused, 0, sizeof(bool)*m_count);
 
   memset(ok, -1, sizeof(int)*count);

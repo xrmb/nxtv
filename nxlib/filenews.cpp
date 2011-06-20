@@ -76,10 +76,13 @@ NXLFSFileNews::~NXLFSFileNews()
 
   if(m_head)
   {
+    /*
+      doesnt make much sense to increase it to prevent the message... maybe for debugging
     if(offset < NXNEWSHEAD && offset + *rlen > NXNEWSHEAD)
     {
       printf("info:\thead too small %d vs %lld\n", NXNEWSHEAD, offset + *rlen);
     }
+    */
     if(offset + *rlen < NXNEWSHEAD)
     {
       memcpy(buffer, m_head+offset, *rlen);
@@ -133,15 +136,17 @@ NXLFSFileNews::~NXLFSFileNews()
       else
         left = tg;
 
-      //printf("readahead: left %d\n", left);
       size_t ba;
+      size_t done = 0;
+      size_t start = left;
       for(ba = b+1; ba < m_blocks; ba++)
       {
         if(left < m_bi[ba].end - m_bi[ba].start) break;
         left -= m_bi[ba].end - m_bi[ba].start;
-        if(cache->aget(m_bi[ba].msgid) <= 0) break;
+        int r = cache->aget(m_bi[ba].msgid);
+        if(r == 0) break;
+        done = left;
       }
-      //printf("readahead: blocks %d..%d size %d left %d\n", b+1, pa, m_bi[b].size, left);
 
       //--- reached end of file, and got a next file hint... ---
       if(ba == m_blocks && rahint)
@@ -154,10 +159,14 @@ NXLFSFileNews::~NXLFSFileNews()
           {
             if(left < n->m_bi[ba].end - n->m_bi[ba].start) break;
             left -= n->m_bi[ba].end - n->m_bi[ba].start;
-            if(cache->aget(n->m_bi[ba].msgid) == 0) break;
+            int r = cache->aget(n->m_bi[ba].msgid);
+            if(r == 0) break;
+            done = left;
           }
         }
       }
+
+      if(readahead && NXLOG.reada) printf("readahead: read ahead done to %d, requested up to %d\n", done, left-start);
     }
 
 /*
@@ -197,10 +206,13 @@ NXLFSFileNews::~NXLFSFileNews()
 
   if(m_head)
   {
+    /*
+      doesnt make much sense to increase it to prevent the message... maybe for debugging
     if(offset < NXNEWSHEAD && offset + *rlen > NXNEWSHEAD)
     {
       printf("info:\thead too small %d vs %lld\n", NXNEWSHEAD, offset + *rlen);
     }
+    */
     if(offset + *rlen < NXNEWSHEAD)
     {
       memcpy(buffer, m_head+offset, *rlen);

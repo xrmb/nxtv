@@ -102,10 +102,10 @@ int NXNzb::parsei()
   }
   else
   {
-    fs = (char**)alloca(sizeof(char*)*filec);
-    fe = (char**)alloca(sizeof(char*)*filec);
-    ss = (char**)alloca(sizeof(char*)*segmentc);
-    se = (char**)alloca(sizeof(char*)*segmentc);
+    fs = (char**)NXalloca(sizeof(char*)*filec);
+    fe = (char**)NXalloca(sizeof(char*)*filec);
+    ss = (char**)NXalloca(sizeof(char*)*segmentc);
+    se = (char**)NXalloca(sizeof(char*)*segmentc);
   }
 
   c = m_buf;

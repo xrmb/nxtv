@@ -126,7 +126,7 @@ int NXLFSMessageCache::init()
 
   if(cnt > 1)
   {
-    CF** cfs = (CF**)_alloca(sizeof(CF*)*cnt);
+    CF** cfs = (CF**)NXalloca(sizeof(CF*)*cnt);
     CF* cf = m_files;
     for(size_t i = 0; i < cnt; i++, cf = cf->n)
       cfs[i] = cf;
@@ -253,7 +253,13 @@ int NXLFSMessageCache::fcached(const char* msgid) const
 }
 
 
-
+/*
+  returns:
+  >0x10000  ... connection now working on it
+  >0x20000  ... connection already working on it
+  =0        ... all connections busy
+  <0        ... somewhere in cache
+*/
 int NXLFSMessageCache::aget(const char* msgid)
 {
   if(find(msgid)) return -1;

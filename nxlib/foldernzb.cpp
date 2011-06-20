@@ -119,7 +119,7 @@ int NXLFSFolderNZB::buildr()
   int* headmsgidok = NULL;
   if(cfg->nzbheadcheck())
   {
-    const char** headmsgid = usestack ? (const char**)alloca(sizeof(const char*)*nzb.segmentc)
+    const char** headmsgid = usestack ? (const char**)NXalloca(sizeof(const char*)*nzb.segmentc)
                                       : afheadmsgid.get(nzb.segmentc);
     int segmentc = 0;
     for(int file = 0; file < nzb.filec; file++)
@@ -129,7 +129,7 @@ int NXLFSFolderNZB::buildr()
         headmsgid[segmentc] = nzb.files[file].segments[segment].msgid;
       }
     }
-    headmsgidok = usestack ? (int*)alloca(sizeof(int)*segmentc)
+    headmsgidok = usestack ? (int*)NXalloca(sizeof(int)*segmentc)
                            : afheadmsgidok.get(segmentc);
     clock_t start = clock();
     //if(pool->bhead(headmsgidok, headmsgid, segmentc) < 0)
@@ -197,7 +197,7 @@ int NXLFSFolderNZB::buildr()
 
 
   //--- get msgids ---
-  const char** getmsgid = usestack ? (const char**)alloca(sizeof(const char*)*nzb.filec)
+  const char** getmsgid = usestack ? (const char**)NXalloca(sizeof(const char*)*nzb.filec)
                                    : afgetmsgid.get(nzb.filec);
   int segmentc = 0;
   for(int file = 0; file < nzb.filec; segmentc += nzb.files[file].segmentc, file++)
@@ -241,9 +241,9 @@ int NXLFSFolderNZB::buildr()
 
 
   //--- get the msgs we need for size ---
-  int* getmsgidok = usestack ? (int*)alloca(sizeof(int)*nzb.filec)
+  int* getmsgidok = usestack ? (int*)NXalloca(sizeof(int)*nzb.filec)
                              : afgetmsgidok.get(nzb.filec);
-  char* getmsgidd = usestack ? (char*)alloca((sizeof(NXPart)+NXNEWSHEAD)*nzb.filec)
+  char* getmsgidd = usestack ? (char*)NXalloca((sizeof(NXPart)+NXNEWSHEAD)*nzb.filec)
                              : afgetmsgidd.get((sizeof(NXPart)+NXNEWSHEAD)*nzb.filec); // fake-type!
   if(pool->bget(getmsgidok, getmsgid, nzb.filec, getmsgidd, NXNEWSHEAD) < 0)
   {
