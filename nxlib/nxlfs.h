@@ -170,6 +170,7 @@ public:
 
   int savenxh(const char* path);
   int savenxi(const char* path);
+  int savenxi(FILE* out);
 
 private:
   int buildr();

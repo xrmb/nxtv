@@ -357,6 +357,20 @@ int NXLFSFolderRAR::buildrr()
 
 int NXLFSFolderRAR::savenxi(const char* path)
 {
+  FILE* out = NULL;
+  auto_close acout;
+
+  if(fopen_s(&out, path, "wb")) return R(-1, "open error");
+  if(out == NULL) return R(-2, "open error");
+  acout.set(out);
+
+  return savenxi(out);
+}
+
+
+
+int NXLFSFolderRAR::savenxi(FILE* out)
+{
   const NXLFSFileRAR* fr = NULL;
   const NXLFSFileNews* fn = NULL;
 
@@ -372,13 +386,6 @@ int NXLFSFolderRAR::savenxi(const char* path)
     }
   }
   */
-
-  FILE* out = NULL;
-  auto_close acout;
-
-  if(fopen_s(&out, path, "wb")) return R(-1, "open error");
-  if(out == NULL) return R(-2, "open error");
-  acout.set(out);
 
   bool first = true;
   for(const NXLFSFile* file = m_files; file; file = file->next())
