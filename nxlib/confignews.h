@@ -27,6 +27,7 @@ public:
   const char* nzbextfilter() const { return m_nzbextfilter; }
   const char* nzbnamefilter() const { return m_nzbnamefilter; }
   bool nzbheadcheck() const { return m_nzbheadcheck; }
+  bool crc() const { return m_crc; }
 
   void setNzbheadcheck(bool nzbheadcheck) { m_nzbheadcheck = false; }
   void setCache(const char* cache) { NXfree(m_cache); if(cache) m_cache = NXstrdup(cache); else m_cache = NULL; }
@@ -58,6 +59,7 @@ public:
   char* m_nzbextfilter;
   char* m_nzbnamefilter;
   bool m_nzbheadcheck;
+  bool m_crc;
 
   NXFile** m_cfg;
   size_t m_cfgs;

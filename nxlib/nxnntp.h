@@ -2,7 +2,6 @@
 
 #include "nxlib.h"
 
-const int NXNNTPCRC = 1;  // 10% of cpu goes here
 
 class NXNNTP
 {

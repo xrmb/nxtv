@@ -25,6 +25,7 @@ NXLFSConfigNews::NXLFSConfigNews()
   m_nzbextfilter = NULL;
   m_nzbnamefilter = NULL;
   m_nzbheadcheck = true;
+  m_crc = true;
 
   m_cfg = NULL;
   m_cfgs = 0;
@@ -194,6 +195,9 @@ int NXLFSConfigNews::init0(const wchar_t* path)
       value++;
     }
   }
+
+  value = f->find("crc");
+  if(value) { m_crc = strcmp("1", value) == 0 || _stricmp("true", value) == 0; }
 
   return 0;
 }

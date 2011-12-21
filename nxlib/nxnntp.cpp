@@ -617,12 +617,14 @@ int NXNNTP::ydecode(NXPart* data, size_t datasize, char* buf, size_t len)
   int size = strtol(pos, &end, 10);
   if(pos == end || size < 1 || size == ULONG_MAX) return R(-48, "todo");
 
-  if(NXNNTPCRC)
+  const NXLFSConfigNews* cfg = NXLFSConfigNews::i();
+  if(!cfg) return R(-51, "no config");
+  if(cfg->crc())
   {
     unsigned __int32 crc32 = CRC32(&data->data, size);
-    if(ycrc32 != crc32) return R(-51, "ydecode crc error");
+    if(ycrc32 != crc32) return R(-52, "ydecode crc error");
   }
-  if(wpos - &data->data != size) return R(-52, "ydecode size error");
+  if(wpos - &data->data != size) return R(-53, "ydecode size error");
 
   data->version = NXPARTVERSION;
   data->size = ysize;
